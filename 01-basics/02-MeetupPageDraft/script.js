@@ -30,7 +30,7 @@ const agendaItemTitles = {
 };
 
 /**
- * Словарь иконок для для всех типов элементов программы.
+ * Словарь иконок для всех типов элементов программы.
  * Соответствует имени иконок в директории /assets/icons
  */
 const agendaItemIcons = {
@@ -44,19 +44,57 @@ const agendaItemIcons = {
   other: 'cal-sm',
 };
 
+const fetchMeetup = () =>
+  fetch(`${API_URL}/meetups/${MEETUP_ID}`).then((response) => response.json());
+
 export const app = new Vue({
   el: '#app',
 
-  data: {
-    //
+  data() {
+    return {
+      rawMeetup: null,
+    };
   },
 
   mounted() {
     // Требуется получить данные митапа с API
+    fetchMeetup().then((meetupData) => {
+      this.rawMeetup = meetupData;
+    });
   },
 
   computed: {
-    //
+    meetup() {
+      if (!this.rawMeetup) {
+        return null;
+      }
+
+      return {
+        ...this.rawMeetup,
+        agenda: this.agenda,
+        coverImage: this.rawMeetup.imageId
+          ? {
+              '--bg-url': `url(${getMeetupCoverLink(this.rawMeetup)})`,
+            }
+          : undefined,
+        dateString: new Date(this.rawMeetup.date).toLocaleString(
+          navigator.language,
+          {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          },
+        ),
+      };
+    },
+
+    agenda() {
+      return this.rawMeetup.agenda.map((agendaItem) => ({
+        ...agendaItem,
+        localeType: agendaItemTitles[agendaItem.type],
+        iconPath: `/assets/icons/icon-${agendaItemIcons[agendaItem.type]}.svg`,
+      }));
+    },
   },
 
   methods: {
