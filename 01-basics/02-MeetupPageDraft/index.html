@@ -10,16 +10,16 @@
 </head>
 <body>
 <div id="app">
-  <div>
-    <div class="meetup-cover">
-      <h1 class="meetup-cover__title">Название митапа</h1>
+  <div v-if="meetup">
+    <div class="meetup-cover" :style="meetup.coverImage">
+      <h1 class="meetup-cover__title">{{ meetup.title }}</h1>
     </div>
 
     <div class="container">
       <div class="meetup">
         <div class="meetup__content">
           <h3>Описание</h3>
-          <p class="meetup-description">Описание митапа</p>
+          <p class="meetup-description">{{ meetup.description }}</p>
 
           <h3>Программа</h3>
           <div class="meetup-agenda">
@@ -43,15 +43,15 @@
           <ul class="info-list">
             <li>
               <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-user.svg" />
-              Организатор
+              {{ meetup.organizer }}
             </li>
             <li>
               <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-map.svg" />
-              Место
+              {{ meetup.place }}
             </li>
             <li>
               <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-              <time datetime="2020-02-31">31 фев. 2020</time>
+              <time datetime="2020-02-31">{{ meetup.dateString }}</time>
             </li>
           </ul>
         </div>
