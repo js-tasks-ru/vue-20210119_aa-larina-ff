@@ -27,8 +27,7 @@ export const CounterButton = {
   // Шаблон лучше держать максимально простым, а логику выносить в методы
   methods: {
     increment() {
-      let currentValue = this.count;
-      this.$emit('increment', currentValue++);
+      this.$emit('increment', this.count + 1);
     },
   },
 };
