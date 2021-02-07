@@ -1,27 +1,21 @@
 /*
   Полезные функции по работе с датой можно описать вне Vue компонента
  */
-const MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-// @TO-DO вообще удалить этот массив
-//const WEEK_DAYS = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+const MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
 const WEEK_LENGTH = 7;
-// @TO-DO вообще удалить этот объект
-// const DAYS_IN_MONTHS = {
-//   'Январь': 31,
-//   'Февраль': 28,
-//   'Март': 31,
-//   'Апрель': 30,
-//   'Май': 31,
-//   'Июнь': 30,
-//   'Июль': 31,
-//   'Август': 31,
-//   'Сентябрь': 30,
-//   'Октябрь': 31,
-//   'Ноябрь': 30,
-//   'Декабрь': 31,
-// };
-
-// @To-do: сделать поправку на високосный год
 
 export const MeetupsCalendar = {
   name: 'MeetupsCalendar',
@@ -101,7 +95,8 @@ export const MeetupsCalendar = {
             : this.date.getMonth() - 1,
         lastDayWeekDayIndex: new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDay(),
         title: MONTHS[this.date.getMonth()],
-        currentDateWeekDayIndex: this.date.getDay() - 1,
+        //currentDateWeekDayIndex: this.date.getDay(),
+        currentDateWeekDayIndex: this.date.getDay() - 1 < 0 ? WEEK_LENGTH - 1 : this.date.getDay() - 1,
         daysInMonth: new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate(),
       };
     },
