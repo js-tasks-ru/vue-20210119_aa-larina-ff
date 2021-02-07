@@ -101,7 +101,7 @@ export const MeetupsCalendar = {
             : this.date.getMonth() - 1,
         lastDayWeekDayIndex: new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDay(),
         title: MONTHS[this.date.getMonth()],
-        currentDateWeekDayIndex: this.date.getDay(),
+        currentDateWeekDayIndex: this.date.getDay() - 1,
         daysInMonth: new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate(),
       };
     },
@@ -116,7 +116,9 @@ export const MeetupsCalendar = {
     nextMonth() {
       return {
         restDaysAmount:
-          WEEK_LENGTH - 1 - this.currentMonth.lastDayWeekDayIndex,
+          WEEK_LENGTH - this.currentMonth.lastDayWeekDayIndex < WEEK_LENGTH
+            ? WEEK_LENGTH - this.currentMonth.lastDayWeekDayIndex
+            : 0,
       };
     },
 
