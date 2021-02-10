@@ -38,9 +38,9 @@ export const MeetupsCalendar = {
       <div class="rangepicker__date-grid">
         <div
           class="rangepicker__cell rangepicker__cell_inactive"
-          v-for="day in currentMonth.currentDateWeekDayIndex"
+          v-for="day in currentMonth.firstDayWeekDayIndex"
         >
-          {{ previousMonth.daysInMonth - currentMonth.currentDateWeekDayIndex + day}}
+          {{ previousMonth.daysInMonth - currentMonth.firstDayWeekDayIndex + day }}
         </div>
         <div
           class="rangepicker__cell"
@@ -93,10 +93,9 @@ export const MeetupsCalendar = {
           this.date.getMonth() - 1 < 0
             ? MONTHS.length - 1
             : this.date.getMonth() - 1,
+        firstDayWeekDayIndex: new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDay(),
         lastDayWeekDayIndex: new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDay(),
         title: MONTHS[this.date.getMonth()],
-        //currentDateWeekDayIndex: this.date.getDay(),
-        currentDateWeekDayIndex: this.date.getDay() - 1 < 0 ? WEEK_LENGTH - 1 : this.date.getDay() - 1,
         daysInMonth: new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate(),
       };
     },
